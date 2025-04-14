@@ -28,10 +28,44 @@ class MainActivity : AppCompatActivity() {
         val answer = findViewById<TextView>(R.id.textView2)
 
         addButton.setOnClickListener {
-            val num1 = num1EditText.text.toString().toDoubleOrNull() ?: 0.0
-            val num2 = num2EditText.text.toString().toDoubleOrNull() ?: 0.0
-            val sum = num1 + num2
-            answer.text = "Result: $sum"
+            val num1T = num1EditText.text.toString()
+            val num2T = num2EditText.text.toString()
+
+            var num1: Double? = null
+            var num2: Double? = null
+            var hasError = false
+
+            if (num1T.isBlank()) {
+                    num1EditText.error = "Please Enter a Number"
+                    hasError = true
+                } else {
+                    try {
+                        num1 = num1T.toDouble()
+                    } catch (e: NumberFormatException) {
+
+                        num1EditText.error = "Invalid format"
+                        hasError = true
+                    }
+                }
+            if (num2T.isBlank()) {
+                    num2EditText.error = "Please Enter a Number"
+                    hasError = true
+                } else {
+                    try {
+                        num2 = num2T.toDouble()
+                    } catch (e: NumberFormatException) {
+
+                        num2EditText.error = "Invalid format"
+                        hasError = true
+                    }
+                }
+            if (!hasError) {
+
+                    val sum = num1!! + num2!!
+                    answer.text = "Result: $sum"
+                } else {
+                    answer.text = "Please Enter Numbers "
+                }
+            }
         }
     }
-}
